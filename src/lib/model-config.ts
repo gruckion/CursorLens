@@ -7,6 +7,8 @@ type ModelConfig = {
   presencePenalty?: number;
   inputTokenCost: number;
   outputTokenCost: number;
+  cacheWrite?: number;
+  cacheRead?: number;
   isTemplate: boolean;
 };
 
@@ -145,6 +147,8 @@ export const getModelConfigurations = (): ModelConfigurations => ({
       presencePenalty: 0,
       inputTokenCost: 0.000003,
       outputTokenCost: 0.000015,
+      cacheWrite: 0.00000375,
+      cacheRead: 0.0000003,
       isTemplate: true,
     },
   },

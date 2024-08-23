@@ -4,7 +4,7 @@ import { createCohere } from "@ai-sdk/cohere";
 import { createMistral } from "@ai-sdk/mistral";
 import { ollama } from "ollama-ai-provider";
 
-import { generateText, streamText } from "ai";
+import { generateText, type Message, streamText } from "ai";
 import { insertLog, getDefaultConfiguration } from "@/lib/db";
 import { type NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
@@ -98,12 +98,19 @@ export async function POST(
     let modifiedMessages = messages;
 
     if (provider.toLowerCase() === "anthropiccached") {
-      const hasPotentialContext = messages.some(
-        (message: any) => message.name === "potential_context",
-      );
+      const messagesToCache = messages
+        .filter(
+          (message: Message) =>
+            // Cache user messages with code snippets, potential context, or the first system message
+            (message.role === "user" && message.content.includes("```")) ||
+            message.name === "potential_context" ||
+            (message.role === "system" && messages.indexOf(message) === 0),
+        )
+        // We can only cache a maximum of 4 messages.
+        .slice(0, 4);
 
-      modifiedMessages = messages.map((message: any) => {
-        if (message.name === "potential_context") {
+      modifiedMessages = messages.map((message: Message) => {
+        if (messagesToCache.includes(message)) {
           return {
             ...message,
             experimental_providerMetadata: {
@@ -113,15 +120,6 @@ export async function POST(
         }
         return message;
       });
-
-      if (!hasPotentialContext && modifiedMessages.length >= 2) {
-        modifiedMessages[1] = {
-          ...modifiedMessages[1],
-          experimental_providerMetadata: {
-            anthropic: { cacheControl: { type: "ephemeral" } },
-          },
-        };
-      }
     }
 
     const streamTextOptions = {
