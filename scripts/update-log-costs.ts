@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { getModelCost } from "../src/lib/cost-calculator";
+
+import { getModelCost } from "../apps/local/src/lib/cost-calculator";
 
 const prisma = new PrismaClient();
 

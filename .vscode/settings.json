@@ -1,0 +1,13 @@
+{
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "files.associations": {
+    "*.json": "jsonc"
+  },
+  "[jsonc]": {
+    "files.trimTrailingWhitespace": true
+  }
+}
