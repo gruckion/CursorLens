@@ -177,9 +177,9 @@ export async function POST(
           finishReason,
           ...otherProps
         }) {
-          const inputTokens = usage?.promptTokens ?? 0;
-          const outputTokens = usage?.completionTokens ?? 0;
-          const totalTokens = usage?.totalTokens ?? 0;
+          const inputTokens = usage.promptTokens ?? 0;
+          const outputTokens = usage.completionTokens ?? 0;
+          const totalTokens = usage.totalTokens ?? 0;
 
           const modelCost = await getModelCost(provider, model);
           const inputCost = (inputTokens / 1000000) * modelCost.inputTokenCost;
@@ -247,9 +247,9 @@ export async function POST(
       messages,
     });
 
-    const inputTokens = result.usage?.prompt_tokens ?? 0;
-    const outputTokens = result.usage?.completion_tokens ?? 0;
-    const totalTokens = result.usage?.total_tokens ?? 0;
+    const inputTokens = result.usage.prompt_tokens ?? 0;
+    const outputTokens = result.usage.completion_tokens ?? 0;
+    const totalTokens = result.usage.total_tokens ?? 0;
 
     const modelCost = await getModelCost(provider, model);
     const inputCost = inputTokens * modelCost.inputTokenCost;

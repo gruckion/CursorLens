@@ -1,4 +1,4 @@
-type ModelConfig = {
+interface ModelConfig {
   name?: string;
   temperature?: number;
   maxTokens?: number;
@@ -8,15 +8,11 @@ type ModelConfig = {
   inputTokenCost: number;
   outputTokenCost: number;
   isTemplate: boolean;
-};
+}
 
-type ProviderConfigs = {
-  [key: string]: ModelConfig | null;
-};
+type ProviderConfigs = Record<string, ModelConfig | null>;
 
-export type ModelConfigurations = {
-  [key: string]: ProviderConfigs;
-};
+export type ModelConfigurations = Record<string, ProviderConfigs>;
 
 export const getModelConfigurations = (): ModelConfigurations => ({
   openai: {

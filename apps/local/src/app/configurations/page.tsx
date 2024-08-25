@@ -31,7 +31,7 @@ import {
   TableRow,
 } from "@acme/ui/table";
 
-import { ModelConfigurations } from "~/lib/model-config";
+import type { ModelConfigurations } from "~/lib/model-config";
 import {
   createConfiguration,
   getConfigurations,

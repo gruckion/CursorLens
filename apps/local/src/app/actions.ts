@@ -11,7 +11,7 @@ function serializeDates<T>(obj: T): T {
 }
 
 // Add the metadata type definition
-type LogMetadata = {
+interface LogMetadata {
   topP: number;
   model: string;
   configId: string;
@@ -24,7 +24,7 @@ type LogMetadata = {
   inputTokens: number;
   outputTokens: number;
   totalCost: number;
-};
+}
 
 export async function getLogs({
   provider = "all",
@@ -75,13 +75,12 @@ export async function getLogs({
   }
 }
 
-export type Stats = {
+export interface Stats {
   totalLogs: number;
   totalTokens: number;
   totalPromptTokens: number;
   totalCompletionTokens: number;
-  perModelProviderStats: {
-    [key: string]: {
+  perModelProviderStats: Record<string, {
       logs: number;
       tokens: number;
       promptTokens: number;
@@ -89,15 +88,14 @@ export type Stats = {
       cost: number;
       provider: string;
       model: string;
-    };
-  };
+    }>;
   tokenUsageOverTime: {
     date: string;
     tokens: number;
     promptTokens: number;
     completionTokens: number;
   }[];
-};
+}
 
 export async function getStats(timeFilter = "all"): Promise<Stats> {
   let startDate = new Date(0); // Default to all time
@@ -125,8 +123,7 @@ export async function getStats(timeFilter = "all"): Promise<Stats> {
     },
   });
 
-  const perModelProviderStats: {
-    [key: string]: {
+  const perModelProviderStats: Record<string, {
       logs: number;
       tokens: number;
       promptTokens: number;
@@ -134,8 +131,7 @@ export async function getStats(timeFilter = "all"): Promise<Stats> {
       cost: number;
       provider: string;
       model: string;
-    };
-  } = {};
+    }> = {};
 
   let totalTokens = 0;
   let totalPromptTokens = 0;
@@ -289,12 +285,12 @@ export async function deleteConfiguration(id: string): Promise<void> {
   });
 }
 
-type ConfigurationCost = {
+interface ConfigurationCost {
   provider: string;
   model: string;
   inputTokenCost: number;
   outputTokenCost: number;
-};
+}
 
 export async function getConfigurationCosts(): Promise<ConfigurationCost[]> {
   const modelConfigurations = getModelConfigurations();

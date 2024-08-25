@@ -41,8 +41,7 @@ interface Stats {
   totalTokens: number;
   totalPromptTokens: number;
   totalCompletionTokens: number;
-  perModelProviderStats: {
-    [key: string]: {
+  perModelProviderStats: Record<string, {
       logs: number;
       tokens: number;
       promptTokens: number;
@@ -50,8 +49,7 @@ interface Stats {
       cost: number;
       provider: string;
       model: string;
-    };
-  };
+    }>;
   tokenUsageOverTime: {
     date: string;
     tokens: number;
@@ -333,7 +331,7 @@ export default function StatsPage() {
                 />
                 <ChartTooltip
                   content={({ active, payload }) => {
-                    if (active && payload && payload.length) {
+                    if (active && payload?.length) {
                       return (
                         <div className="rounded-lg bg-white p-2 shadow-md">
                           <p className="font-bold">{`${payload[0]?.payload.provider}: ${payload[0]?.payload.model}`}</p>

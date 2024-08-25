@@ -1,12 +1,14 @@
 "use client";
 
-import { CSSProperties, useEffect, useState } from "react";
+import type { CSSProperties} from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ChevronDown, ChevronUp, Copy } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import type {
+  SyntaxHighlighterProps} from "react-syntax-highlighter";
 import {
-  Prism as SyntaxHighlighter,
-  SyntaxHighlighterProps,
+  Prism as SyntaxHighlighter
 } from "react-syntax-highlighter";
 import * as themes from "react-syntax-highlighter/dist/esm/styles/prism";
 import { toast } from "sonner";
@@ -295,14 +297,14 @@ export default function LogDetails({ logId }: LogDetailsProps) {
           </SyntaxHighlighter>
         )}
 
-        {parsedContent && parsedContent.text && (
+        {parsedContent?.text && (
           <div className="mb-4">
             <h4 className="mb-2 text-lg font-semibold">AI Response</h4>
             {renderAIResponse(parsedContent)}
           </div>
         )}
 
-        {parsedContent && parsedContent.messages && (
+        {parsedContent?.messages && (
           <div className="mb-4">
             <h4 className="mb-2 text-lg font-semibold">
               Messages (Most recent on top)
@@ -332,9 +334,9 @@ export default function LogDetails({ logId }: LogDetailsProps) {
             <TableCell>{log.metadata.inputTokens}</TableCell>
             <TableCell>{log.metadata.outputTokens}</TableCell>
             <TableCell>{log.metadata.totalTokens}</TableCell>
-            <TableCell>${log.metadata.inputCost?.toFixed(4)}</TableCell>
-            <TableCell>${log.metadata.outputCost?.toFixed(4)}</TableCell>
-            <TableCell>${log.metadata.totalCost?.toFixed(4)}</TableCell>
+            <TableCell>${log.metadata.inputCost.toFixed(4)}</TableCell>
+            <TableCell>${log.metadata.outputCost.toFixed(4)}</TableCell>
+            <TableCell>${log.metadata.totalCost.toFixed(4)}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

@@ -21,12 +21,10 @@ Cursor Lens is an open-source tool designed to provide insights into AI-assisted
 
 ## Technology Stack
 
-```text
-Frontend/Backend: Next.js with React
-Database: PostgreSQL with Prisma ORM
-AI Library: Vercel AI SDK
-Styling: Tailwind CSS with shadcn/ui components
-```
+- **Frontend/Backend**: Next.js with React
+- **Database**: PostgreSQL with Prisma ORM
+- **AI Library**: Vercel AI SDK
+- **Styling**: Tailwind CSS with shadcn/ui components
 
 ## Getting Started
 
